@@ -1,0 +1,234 @@
+*
+{
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.entDetails {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* Allow wrapping for smaller devices */
+}
+
+.entName, .entValue {
+  padding: 5px 10px;
+}
+
+.entValue {
+  width: 100%;
+}
+
+td
+{
+    padding: 0px 30px;
+}
+
+/* Icons and Feed */
+.like, .commentIcon, .watch
+{
+  color: red; /* Change the color to red when liked */
+}
+
+.feedIcon
+{
+    transition: transform 0.6s ease;
+}
+
+.feedIcon:hover
+{
+    background-color: transparent;
+    transform: scale(1.10);
+}
+
+
+.comments-dropdown,.share-dropdown 
+{
+    background-color: rgba(53, 21, 21, 0.411);
+    border: 1px solid var(--text-color);
+    padding: 10px;
+    position: absolute; /* Adjust positioning as needed */
+    z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.comment 
+{
+    font-size: 12px; /* Adjusts the size of the comment text */
+    color: var(--text-color);
+    margin: 5px 0;
+}
+
+.comment-text {
+  color: var(--text-color);
+}
+
+.commentInputContainer
+{
+    margin: 2vh 0;
+    font-size: 14px;
+}
+
+.commentInputContainer > button
+{
+  margin-left: 22px;
+}
+
+.addWatchList:hover, .commentInputContainer > button:hover, .shareIcon:hover
+{
+    transform: scale(1.05);
+    background-color: rgba(255, 0, 0, 0.562);
+}
+
+ul
+{
+    display: flex;
+    gap: 10px;
+}
+
+li
+{
+    list-style: none;
+}
+
+/* Rating stars */
+.rating span {
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+.rating span.filled
+{
+    color: gold;
+}
+
+/* Add to watchlist button */
+.addWatchList {
+  background-color: var(--input-bg);
+  width: 165px;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    font-size: 24px; /* Customize loading text size */
+  }
+  
+  .pulsing-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .dot {
+    width: 15px; /* Dot size */
+    height: 15px; /* Dot size */
+    margin: 0 5px; /* Space between dots */
+    border-radius: 50%;
+    background-color: red; /* Dot color */
+    animation: pulse 0.6s infinite alternate;
+  }
+  
+  .dot:nth-child(2) {
+    animation-delay: 0.2s; /* Delay for second dot */
+  }
+  
+  .dot:nth-child(3) {
+    animation-delay: 0.4s; /* Delay for third dot */
+  }
+  
+  table
+  {
+    margin-bottom: 3%;
+  }
+@keyframes pulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.5); }
+}
+
+  /* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .entDetails {
+    flex-direction: column; /* Stack elements vertically */
+  }
+
+  .entName, .entValue {
+    width: 100%; /* Full width for small devices */
+    text-align: center; /* Center the content */
+  }
+
+  td {
+    padding: 10px; /* Add more padding for better spacing */
+  }
+
+  .entName {
+    font-size: 14px;
+  }
+
+  .entValue {
+    font-size: 16px;
+  }
+
+  .entDetails img {
+    width: 60vw; /* Make the image smaller on mobile */
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  .addWatchList {
+    width: 100%; /* Full width for buttons on mobile */
+    margin-top: 20px;
+  }
+
+  .commentInputContainer > button {
+    width: 100%; /* Make the button full width */
+  }
+
+  .commentInputContainer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .comments-dropdown, .share-dropdown {
+    width: 90%; /* Reduce dropdown width for mobile */
+  }
+
+  .rating span {
+    font-size: 14px; /* Adjust size of rating stars */
+  }
+}
+
+@media (max-width: 480px) {
+  .entDetails img {
+    width: 70vw; /* Further reduce the image size on very small screens */
+  }
+
+  .addWatchList {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .entValue {
+    font-size: 14px;
+  }
+
+  .rating span {
+    font-size: 12px; /* Smaller rating stars on small screens */
+  }
+
+  .commentInputContainer {
+    font-size: 12px;
+  }
+
+  .commentInputContainer > button {
+    font-size: 12px;
+  }
+
+  .feedIcon {
+    font-size: 18px; /* Smaller icons on mobile */
+  }
+}

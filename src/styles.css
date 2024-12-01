@@ -1,0 +1,52 @@
+/* Light Mode (Default) */
+:root {
+    --background-color: #ffffff;
+    --text-color: #222222;
+    --link-color: #e50914;
+    --header-background: #f0f0f0;
+    --input-bg: #e0e0e0;
+  }
+  
+  /* Dark Mode */
+  [data-theme='dark'] {
+    --background-color: #222;
+    --text-color: white;
+    --link-color: #e50914;
+    --header-background: #333;
+    --input-bg: #444;
+  }
+  
+  /* Apply Variables Across the App */
+  body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
+  
+  a {
+    color: var(--link-color);
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  input {
+    background-color: var(--input-bg);
+    color: var(--text-color);
+  }
+  
+  button {
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: var(--link-color);
+    color: white;
+  }
+
+  

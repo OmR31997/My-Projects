@@ -1,0 +1,37 @@
+<!-- Header Component -->
+<header class="header">
+    <div class="container header-container">
+      <!-- Logo Section -->
+      <div class="logo">
+        <h2 class="logo-title">ReviewZone<span class="logo-subtitle">.com</span></h2>
+      </div>
+  
+      <!-- Navigation Links -->
+      <nav class="nav-links">
+        <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+        <a routerLink="/movies" routerLinkActive="active">Movies</a>
+        <a routerLink="/shows" routerLinkActive="active">Shows</a>
+        <a routerLink="/about" routerLinkActive="active">About Us</a>
+      </nav>
+  
+      <!-- Search Bar and User Profile -->
+      <div class="header-actions">
+        <!-- Dark/Light Mode Toggle -->
+        <button (click)="toggleTheme()" aria-label="Toggle dark mode">
+          <i class="fa-solid fa-circle-half-stroke"></i>
+        </button>
+  
+        <!-- Search Bar -->
+        <input type="text" class="search-bar"  [(ngModel)]="searchQuery"  (input)="onSearchChange()"  placeholder="Search movies..." />
+  
+        <!-- User Profile -->
+        <div class="user-profile" *ngIf="userDetails === undefined">
+          <a routerLink="/signIn" routerLinkActive="active">Sign-In</a>
+        </div>
+        <div class="user-profile" *ngIf="userDetails !== undefined">
+          <p><button (click)="userProfile(userDetails)">Hello, {{userDetails.userName}} 😊</button>
+          <button (click)="signOut()"><i class="fa-solid fa-power-off" style="background-color: transparent; color: red; width: 20px; "></i></button></p>
+        </div>
+      </div>
+    </div>
+  </header>

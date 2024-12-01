@@ -1,0 +1,150 @@
+<div class="loading"  *ngIf="loading">
+    <div class="pulsing-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      <p>Loading, please wait...</p>
+    </div>
+</div>
+<div class="entDetails"  *ngIf="!loading">
+    <table>
+        <thead>
+            <tr>
+                <td colspan="3"><h1 style="text-align: center; padding: 2vh;">{{entDetail.location+" "+entType}}</h1></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="10"><img [src]="'https://wallpapercave.com/'+entDetail.posterUrl+'.jpg'" [alt]="entDetail.posterUrl" style="width: 50vh; height: 70vh;"></td>
+                <td class="entName"><b>Title: </b></td>
+                <td class="entValue"><a [href]="'https://www.imdb.com/'+entDetail.trailerUrl">{{entDetail.title}}</a></td>
+            </tr>
+            <tr *ngIf="isMovie(entDetail) && entDetail.releaseDate">
+                <td class="entName"><b>Original Release Date: </b></td>
+                <td class="entValue">{{entDetail.releaseDate}}</td>
+            </tr>
+            <tr *ngIf="isShow(entDetail) && entDetail.period">
+                <td class="entName"><b>Period: </b></td>
+                <td class="entValue">{{entDetail.period}}</td>
+            </tr>
+            <tr>
+                <td class="entName"><b>Language: </b></td>
+                <td class="entValue">{{entDetail.language}}</td>
+            </tr>
+            <tr>
+                <td class="entName"><b>Genr: </b></td>
+                <td class="entValue">{{entDetail.category}}</td>
+            </tr>
+            <tr>
+                <td class="entName"><b>Cast: </b></td>
+                <td class="entValue">{{entDetail.cast}}</td>
+            </tr>
+            <tr>
+                <td class="entName"><b>Director: </b></td>
+                <td class="entValue">{{entDetail.director}}</td>
+            </tr>
+            <tr>
+                <td class="entName"><b>Producer: </b></td>
+                <td class="entValue">{{entDetail.producer}}</td>
+            </tr>
+            
+            <tr>
+                <td class="entName"><b>Description: </b></td>
+                <td class="entValue">{{entDetail.description}}</td>
+            </tr>
+            <tr>
+                <td class="entName"><b>Location: </b></td>
+                <td class="entValue">{{entDetail.location}}</td>
+            </tr>
+            <tr>
+                <td class="entName"><b>Rating: </b></td>
+                <td class="movieValue">
+                    <div class="progress">
+                        <div class="progress-bar bg-warning" role="progressbar" [ngStyle]="{'width':getPerRating() +'%'}" [attr.aria-valuenow]="getPerRating()" aria-valuemin="0" aria-valuemax="100">{{entDetail.rating}}/10</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr style="height: 100px;">
+                            <td style="padding: 0px;">
+                                <button class="feedIcon" (click)="Liked()">
+                                    <i class="fa-solid fa-thumbs-up" [ngClass]="{'like': pairUserFeed.isLike}"  style="background-color: transparent;"></i>
+                                </button>
+                                <span *ngIf="Count.like !== undefined">{{Count.like}}</span>
+                            </td>
+                            <td style="padding: 0px;">
+                                <button class="feedIcon" (click)="toggleComments()">
+                                    <i class="fa-solid fa-comment" [ngClass]="{'commentIcon': pairUserFeed.isComment}" style="background-color: transparent;"></i>
+                                </button>
+                                <span *ngIf="Count.comment !== undefined">{{Count.comment}}</span>
+                                <div *ngIf="commentsVisible" class="comments-dropdown">
+                                    <div *ngFor="let cmt of cmtList; let i=index; trackBy: trackByCmtId" class="comment">
+                                        <div class="comment-text" *ngIf="editingIndex !== i">
+                                            <span >{{cmt.txtComment}}</span><br>
+                                            <small>Posted at: {{ cmt.dropAt }}</small>
+                                            <span *ngIf="userDetails !== undefined">
+                                                <span *ngIf="userDetails.email === cmt.emailId">
+                                                    <button (click)="editComment(i)">Edit</button>
+                                                    <button (click)="deleteComment(cmt, i)">Delete</button>
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div *ngIf="editingIndex === i">
+                                            <input [(ngModel)]="commentInputTxt.editCmt" placeholder="Edit comment" />
+                                                <button (click)="saveEditedComment(cmt, i)">Save</button>
+                                                <button (click)="cancelEdit()">Cancel</button>
+                                                <br>
+                                        </div>
+                                        <span style=" padding-left: 50px;">from <strong style="color: gold;">{{ cmt.emailId }}</strong></span><br>
+                                    </div>
+                                    <div class="commentInputContainer">
+                                        <input class="commentInput" type="text" [(ngModel)]="commentInputTxt.newCmt"> <button class="commentBtn" (click)="Commented()">Post</button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="padding: 0px;">
+                                <button class="feedIcon" (click)="toggleShare()">
+                                    <i class="fa-solid fa-share" style="background-color: transparent;"></i>
+                                </button>
+                                <div *ngIf="shareVisible" class="share-dropdown">
+                                    <button (click)="share('gmail')" class="shareIcon"><i class="fa-solid fa-square-envelope" style="background-color: transparent;"></i></button>
+                                    <button (click)="share('wp')" class="shareIcon"><i class="fa-brands fa-square-whatsapp" style="background-color: transparent;"></i></button>
+                                    <button (click)="share('linkdn')" class="shareIcon"><i class="fa-brands fa-linkedin" style="background-color: transparent;"></i></button>          
+                                    <button (click)="share('tlg')" class="shareIcon"><i class="fa-brands fa-telegram" style="background-color: transparent;"></i></button>
+                                    <button (click)="share('twt')" class="shareIcon"><i class="fa-brands fa-square-twitter" style="background-color: transparent;"></i></button>
+                                    <button (click)="share('fb')" class="shareIcon"><i class="fa-brands fa-square-facebook" style="background-color: transparent;"></i></button>
+                                    <button (click)="share('outlook')" class="shareIcon"><i class="fa-solid fa-envelope-open" style="background-color: transparent;"></i></button>
+                                </div>
+                            </td>
+                            <td style="padding: 0px;">
+                                <ul>
+                                    <li *ngFor="let star of stars">
+                                        <a class="rating">
+                                            <span (click)="userRate(star)" [ngClass]="{'filled': star <= pairUserFeed.rating}">&#9733;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <button class="addWatchList" (click)="Watched()">
+                                    <i class="fa-solid fa-heart" style="background-color: transparent; margin-right: 10px;" [ngClass]="{'watch':pairUserFeed.isWatch}"></i>
+                                        Add Watchlist 
+                                    <span style="font-size: 10px; background-color: transparent;">
+                                        Add by {{Count.watch}} users
+                                    </span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+
+        </tfoot>
+    </table>
+</div>

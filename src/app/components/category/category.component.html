@@ -1,0 +1,18 @@
+<div class="actionMovie">
+    <button class="prev" (click)="slidePrev()" [disabled]="currentIndex === 0">&#10094;</button>
+    <div class="moviesContainer" style="background-color: aqua;">
+        <div *ngFor="let movie of getVisibleMovies()" 
+             style="flex: 0 0 46vh; display: flex; justify-content: center; align-items: center;">
+            <div style="width: 280px; height: 220px;">
+                <div class="imageContainer">
+                    <img [src]="movie.poster" style="width: 280px; height: 210px;">
+                    <div class="titleName">
+                        <p style="text-align: center; white-space: warp;">{{movie.title}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="next" (click)="slideNext()" 
+            [disabled]="currentIndex + getCurrentVisibleCount() >= Movies.length">&#10095;</button>
+</div>

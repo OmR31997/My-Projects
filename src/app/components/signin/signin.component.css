@@ -1,0 +1,191 @@
+/* Default Light Mode Styles */
+:root {
+    --background-color: #ffffff;
+    --text-color: #222222;
+    --link-color: #e50914;
+    --header-background: #f0f0f0;
+    --input-bg: #e0e0e0;
+  }
+  
+  /* Dark Mode */
+  [data-theme="dark"] {
+    --background-color: #222222;
+    --text-color: white;
+    --link-color: #e50914;
+    --header-background: #333333;
+    --input-bg: #444444;
+  }
+  
+  /* General Styles */
+*
+{
+  background-color: var(--background-color);
+}
+  
+.signin-form-field
+{
+    width: 100%; height: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 22vh;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.r {
+    font-size: 15rem;
+    font-weight: bold;
+    color: var(--link-color);
+    position: relative;
+    animation: bounce 1s infinite, rotate 3s linear infinite;
+}
+
+.text 
+{
+    font-size: 24px;
+    color: var(--text-color);
+    margin-top: 10px;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(360deg);
+    }
+}
+
+form 
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+table
+{
+    width: 45vh;
+    height: 40vh;
+}
+
+input::placeholder 
+{
+    color: var(--text-color); /* Set your desired placeholder color */
+    opacity: 0.4; /* Optional: Ensure full opacity for the placeholder */
+}
+
+
+input:focus 
+{
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+input
+{
+    color: var(--text-color);
+}
+.signInBtn, .signUpBtn
+{
+    border-radius: 12px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+    width: 100%;
+}
+
+.signInBtn:hover
+{
+    background-color: var(--link-color)
+}
+
+.signUpBtn:hover
+{
+    background-color: #fa747a;
+}
+
+.providerBtn:hover
+{
+   background-color: rgba(138, 28, 37, 0.589);
+}
+
+td > a
+{
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+td > a:hover
+{
+    color: var(--link-color);
+}
+
+.errors
+{
+    color:red;
+}
+
+.forgot:hover
+{
+    background-color: transparent;
+    color: green;
+}
+
+
+.loading-overlay {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .cube-loader {
+    display: grid;
+    grid-template-columns: repeat(2, 20px);
+    gap: 10px;
+  }
+  
+  .cube {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    animation: cube-bounce 1.2s infinite ease-in-out;
+  }
+  
+  .cube:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .cube:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  .cube:nth-child(4) {
+    animation-delay: 0.6s;
+  }
+  
+  @keyframes cube-bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+  }
