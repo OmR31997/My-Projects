@@ -1,9 +1,7 @@
-// src/environments/environment.prod.ts
-
 export const environment = {
   production: true,
   firebaseConfig: {
-    apiKey: process.env['API_KEY'],  // Use bracket notation
+    apiKey: process.env['API_KEY'],
     authDomain: process.env['AUTH_DOMAIN'],
     databaseURL: process.env['DATABASE_URL'],
     projectId: process.env['PROJECT_ID'],
@@ -13,7 +11,7 @@ export const environment = {
     measurementId: process.env['MEASUREMENT_ID'],
   },
   entertaiment: {
-    movieApiUrl: process.env['MOVIE_URL'],  // Use bracket notation
+    movieApiUrl: process.env['MOVIE_URL'],
     showApiUrl: process.env['SHOW_URL'],
     feedBApiUrl: process.env['FEED_URL'],
     userApiUrl: process.env['USER_URL'],
