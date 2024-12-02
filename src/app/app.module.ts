@@ -26,6 +26,7 @@ import { LoadingInterceptor } from './interceptor/loading.interceptor';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getAnalytics } from 'firebase/analytics';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,7 @@ import { getAnalytics } from 'firebase/analytics';
     AngularFireAuthModule,
     ReactiveFormsModule,
   ],
-  providers: [AuthService, { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }],
+  providers: [AuthService, { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule 
