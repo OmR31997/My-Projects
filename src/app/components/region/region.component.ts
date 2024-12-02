@@ -189,20 +189,17 @@ export class RegionComponent implements OnInit
         });
       },
       error => {
-        console.error('Error fetching shows:', error);
+        console.error('Error fetching movies:', error);
       }
     );
   }
-
-  // getCurrentVisibleCount(region:string)
-  // {
-  //   return this.currentIndex[region] === 0 ? this.initalVisibleItems[region] : 1;
-  // }
 
   getEntertaimentList(region:string): (Movie | Show)[]
   {
     switch(this.route.url)
     {
+      case "/moviess":
+        return this.movies.filter(movie => movie.location === region);
       case "/movies":
         return this.movies.filter(movie => movie.location === region);
       case "/shows":
@@ -234,8 +231,6 @@ export class RegionComponent implements OnInit
       }
       this.sharedService.updateEntDetail(ent)
   }
-
-
 
   filterItems() {
     this.filteredItems = [
