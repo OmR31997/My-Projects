@@ -1,0 +1,51 @@
+<!-- Home Page Skeleton -->
+<div class="hero-section">
+    <div class="hero-content">
+      <h1>Welcome to Movie Library</h1>
+      <p>Discover, Explore, and Enjoy the Best Movies</p>
+      <button class="btn-discover">Discover More</button>
+    </div>
+  </div>
+  
+  <!-- Movie or Show Selection -->
+  <div class="movie_or_show" *ngIf="isHide">
+    <table class="selection-table">
+      <tr>
+        <td>
+          <button class="btn btn-dark movie-btn" (click)="ctgEvent('movies')">Movies</button>
+        </td>
+        <td>
+          <button class="btn btn-dark show-btn" (click)="ctgEvent('shows')">Shows</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  
+  <div class="ent-container">
+    <!-- Categories Section -->
+    <section class="ent-categories">
+      <h2>Browse by Genre</h2>
+      <div class="genres-grid">
+        <div class="genre-card" *ngFor="let ctg of Category">
+          <button class="genre-btn" (click)="getAsk(ctg)">{{ ctg }}</button>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Popular Movies Section -->
+    <section class="popular">
+      <h2>Popular Entertaiment</h2>
+      <div class="popularPoster">
+        <div class="movies-container" style="display: flex;">
+          <img *ngFor="let movie of movies; let i = index" [src]="'https://wallpapercave.com/'+movie.posterUrl+'.jpg'"
+            [ngClass]="{'active': i== currentMovieIndex, 'next': i===(currentMovieIndex + 1)%movies.length}" class="fade"
+            alt="Image {{i+1}}">
+        </div>
+        <div class="shows-container">
+          <img *ngFor="let show of shows; let i = index" [src]="'https://wallpapercave.com/'+show.posterUrl+'.jpg'"
+            [ngClass]="{'active': i== currentShowIndex, 'next': i===(currentShowIndex + 1)%shows.length}" class="fade"
+            alt="Image {{i+1}}">
+        </div>
+      </div>
+    </section>
+  </div>

@@ -1,0 +1,98 @@
+/* Default Light Mode Styles */
+:root {
+    --background-color: #ffffff;
+    --text-color: #222222;
+    --link-color: #e50914;
+    --header-background: #f0f0f0;
+    --input-bg: #e0e0e0;
+  }
+  
+  /* Dark Mode */
+  [data-theme="dark"] {
+    --background-color: #222222;
+    --text-color: white;
+    --link-color: #e50914;
+    --header-background: #333333;
+    --input-bg: #444444;
+  }
+  
+  /* General Styles */
+*
+{
+  background-color: var(--background-color);
+}
+
+form 
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+table
+{
+    margin-top: 10vh;
+    width: 85vh;
+    height: 40vh;
+}
+
+input::placeholder, select
+{
+    color: var(--text-color); /* Set your desired placeholder color */
+    opacity: 0.4; /* Optional: Ensure full opacity for the placeholder */
+}
+
+
+input:focus 
+{
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+input
+{
+    color: var(--text-color);
+}
+
+
+button
+{
+    border-radius: 12px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+    width: 100%;
+
+}
+
+.signInBtn:hover
+{
+    background-color: var(--link-color)
+}
+
+.signUpBtn:hover
+{
+    background-color: #fa747a;
+}
+
+td > a
+{
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+td > a:hover
+{
+    color: var(--link-color);
+}
+
+.errors
+{
+    color:red;
+}
+
+li
+{list-style: square;}

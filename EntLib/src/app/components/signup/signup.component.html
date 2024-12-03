@@ -1,0 +1,101 @@
+<form [formGroup]="userReg" (ngSubmit)="onSubmit(userReg)" novalidate>
+    <table>
+        <tr class="mb-3">
+            <td class="input-group flex-nowrap">
+                <span class="input-group-text"><i class="fa-solid fa-user" style="color: red; width: 20px;"></i></span>
+                <input autofocus formControlName="fName" type="text" class="form-control" placeholder="First Name" aria-label="First name" >
+                <input formControlName="lName" type="text" class="form-control" placeholder="Last Name" aria-label="Last name">
+            </td>
+        </tr>
+        <tr class="errors" *ngIf="userReg.get('fName')?.invalid && userReg.get('fName')?.touched || userReg.get('lName')?.invalid && userReg.get('lName')?.touched">
+            <td>
+                <ul>
+                    <li *ngIf="userReg.get('fName')?.hasError('required')">Please Enter Your First Name</li>
+                    <li *ngIf="userReg.get('lName')?.hasError('required')">Please Fill Your Last Name</li>
+                </ul>
+            </td>
+        </tr>
+        <tr class="mb-3">
+            <td class="input-group flex-nowrap">
+                <span class="input-group-text"><i class="fa-solid fa-mobile" style="color: red; width: 20px;"></i></span>
+                <select formControlName="country" (change)="onCountryChange($event)">
+                    <option value="in">IN(+91)</option>
+                    <option value="jp">JP(+81)</option>
+                    <option value="rs">RS(+7)</option>
+                    <option value="gb">GB(+49)</option>
+                    <option value="us">US(+1)</option>
+                    <option value="uk">UK(+44)</option>
+                </select>
+                <input (input)="onInput($event)" formControlName="mno" type="tel" class="form-control" [placeholder]="phoneNumberPlaceholder" aria-label="Mobile" aria-describedby="addon-wrapping">
+                <div id="recaptcha-container"></div>
+                <div *ngIf="!verificationId">
+                    <button type="button" (click)="onSendOtp()">Send OTP</button>
+                </div>
+                <div *ngIf="verificationId">
+                    <input [(ngModel)]="otp" placeholder="Enter OTP">
+                    <button type="button" (click)="onVerifyOtp()">Submit OTP</button>
+                </div>
+            </td>
+        </tr>
+        <tr class="errors" *ngIf="userReg.get('mno')?.invalid && userReg.get('mno')?.touched">
+            <td>
+                <ul>
+                    <li *ngIf="userReg.get('mno')?.hasError('required')">Please Fill Your Mobile Number</li>
+                    <li *ngIf="userReg.get('mno')?.hasError('pattern')">Please Fill Correct Mobile Number</li>
+                </ul>
+            </td>
+        </tr>
+        <tr class="mb-3">
+            <td class="input-group flex-nowrap">
+                <span class="input-group-text"><i class="fa-regular fa-envelope"
+                        style="color: red;width: 20px;"></i></span>
+                <input formControlName="email" class="form-control" type="email" placeholder="@email.Com">
+            </td>
+        </tr>
+        <tr class="errors" *ngIf="userReg.get('email')?.invalid && userReg.get('email')?.touched">
+            <td>
+                <ul>
+                    <li *ngIf="userReg.get('email')?.hasError('required')">Please Enter Email Address</li>
+                    <li *ngIf="userReg.get('email')?.hasError('pattern')">Please Enter Valid Email</li>
+                </ul>
+            </td>
+        </tr>
+        <tr class="mb-3">
+            <td class="input-group flex-nowrap">
+                <span class="input-group-text"><i class="fa-solid fa-lock" style="color: red;width: 20px;"></i></span>
+                <input (change)="valueChages()" type="Minimum length of 6 characters, Starts with an uppercase letter, & Contains lowercase letters, at least one special character, and at least two digits." formControlName="psw" class="form-control" type="password" placeholder="Enter Your New Password" aria-label="Password"
+                    aria-describedby="addon-wrapping">
+            </td>
+        </tr>
+        <tr class="errors" *ngIf="userReg.get('psw')?.invalid && userReg.get('psw')?.touched">
+            <td>
+                <ul>
+                    <li *ngIf="userReg.get('psw')?.hasError('required')">Please Enter Password Whatever You Want</li>
+                    <li *ngIf="userReg.get('psw')?.hasError('pattern')">Please Enter Valid Password</li>
+                    <li *ngIf="userReg.get('psw')?.hasError('minlength')">Minimum 6 Character Must Be Required</li>
+                </ul>
+            </td>
+        </tr>
+        <tr class="mb-3">
+            <td class="input-group flex-nowrap">
+                <span class="input-group-text"><i class="fa-solid fa-lock" style="color: red;width: 20px;"></i></span>
+                <input formControlName="cPsw" class="form-control" type="password" placeholder="Confirm Your New Password" aria-label="Password"
+                    aria-describedby="addon-wrapping">
+            </td>
+        </tr>
+        <tr class="errors" *ngIf="userReg.get('cPsw')?.invalid && userReg.get('cPsw')?.touched">
+            <td>
+              <ul>
+                <li *ngIf="userReg.get('cPsw')?.hasError('required')">Please Confirm Your Password</li>
+              </ul>
+            </td>
+        </tr>
+          
+        <tr class="mb-3">
+            <td>
+                <button type="submit" class="signInBtn">Sign-Up</button>
+            </td>
+        </tr>
+    </table>
+</form>
+<p *ngIf="(errorMessage || successMessage)" style="text-align: center;">Status: <code style="color: red;">{{errorMessage}}</code><code style="color: green;">{{successMessage}}</code></p>

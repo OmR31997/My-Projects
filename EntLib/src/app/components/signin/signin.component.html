@@ -1,0 +1,73 @@
+<div class="signin-form-field">
+    <div class="logoImg">
+        <div class="logo">
+            <div class="r">R</div>
+            <div class="text">ReviewZone.com</div>
+        </div>
+    </div>
+    <div class="form-field">
+        <div *ngIf="isLoading$ | async" class="loading-overlay">
+            <div class="cube-loader">
+                <div class="cube"></div>
+                <div class="cube"></div>
+                <div class="cube"></div>
+                <div class="cube"></div>
+            </div>
+        </div>
+        <div class="signIn" *ngIf="isLog">
+            <form [formGroup]="userReq" (ngSubmit)="onSubmit(userReq)">
+                <table>
+                    <tr class="mb-3">
+                        <td class="input-group flex-nowrap">
+                            <span class="input-group-text"><i class="fa-regular fa-envelope"
+                                    style="color: red;width: 20px;"></i></span>
+                            <input formControlName="emailOrMobile" class="form-control" type="text" placeholder="Email or Mobile Number">
+                        </td>
+                    </tr>
+                    <tr class="errors" *ngIf="userReq.get('emailOrMobile')?.invalid && userReq.get('emailOrMobile')?.touched">
+                        <td *ngIf="userReq.get('emailOrMobile')?.hasError('required')">
+                            <i class="fa-solid fa-bug"></i> Please Enter Your Email/Mobile No.
+                        </td>
+                    </tr>
+                    <tr class="mb-3">
+                        <td class="input-group flex-nowrap">
+                            <span class="input-group-text"><i class="fa-solid fa-lock" style="color: red;width: 20px;"></i></span>
+                            <input formControlName="password" class="form-control" type="password" placeholder="Password" aria-label="Password"
+                                aria-describedby="addon-wrapping">
+                        </td>
+                    </tr>
+                    <tr class="errors" *ngIf="userReq.get('password')?.invalid && userReq.get('password')?.touched">
+                        <td *ngIf="userReq.get('password')?.hasError('required')">
+                            <i class="fa-solid fa-bug"></i> Please Enter Your Password
+                        </td>
+                    </tr>
+                    <tr class="mb-3">
+                        <td>
+                            <button class="signInBtn" type="submit">Sign-In</button>
+                        </td>
+                    </tr>
+                    <tr class="mb-3">
+                        <td style="text-align: center;">
+                            <button (click)="forgot()" class="forgot" >Forgotten password?</button>  
+                        </td>
+                    </tr>
+                    <tr class="mb-3">
+                        <td style="text-align: center;">
+                            or,<br><button class="providerBtn" type="button" (click)="GSignIn()"><i class="fa-brands fa-google-plus-g" style="background-color: transparent; color: rgb(206, 55, 143); width: 20px; "></i></button>
+                            <button class="providerBtn" (click)="FSignIn()"><i class="fa-brands fa-facebook-f" style="background-color: transparent; color: rgb(46, 46, 233); width: 20px;"></i></button>
+                        </td>
+                    </tr>
+                    <tr class="mb-3">
+                        <td>
+                            <button class="signUpBtn" (click)="Reg()">Create new account</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <p *ngIf="(errorMessage || successMessage)" style="text-align: center;">Status: <code style="color: red;">{{errorMessage}}</code><code style="color: green;">{{successMessage}}</code></p>
+        </div>
+        <div class="signUp" *ngIf="isReg">
+            <app-signup></app-signup>
+        </div>
+    </div>
+</div>
