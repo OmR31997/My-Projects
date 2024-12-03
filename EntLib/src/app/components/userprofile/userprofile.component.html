@@ -1,0 +1,106 @@
+<div class="main">
+    <form [formGroup]="updateReq" (ngSubmit)="onSubmit(updateReq)">
+        <table>
+            <thead>
+                <tr>
+                    <td colspan="3"><h1>User Profile</h1></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th><label>UserId:</label></th>
+                    <td *ngIf="userDetails.userId"><span>{{ userDetails.userId }}</span></td>
+                    <input formControlName="userId" type="hidden">
+                </tr>
+                <tr>
+                    <th><label>UserName:</label></th>
+                    <td>
+                        <span *ngIf="!isEditingUserName">{{ userDetails.userName }}</span>
+                        <input formControlName="userName" *ngIf="isEditingUserName" type="text">
+                    </td>
+                    <td *ngIf="userDetails.userName"><button type="button" (click)="toggleEdit('userName')"><i [ngClass]="isEditingUserName ? 'fa-solid fa-floppy-disk':'fa-solid fa-pen-fancy'" style="background-color: transparent; color: dodgerblue;"></i></button></td>
+                    <td>
+                        <ul class="errors" *ngIf="updateReq.get('userName')?.invalid && updateReq.get('userName')?.touched">
+                            <li  *ngIf="updateReq.get('userName')?.hasError('required')"><i class="fa-solid fa-bug"></i> Name Required Here.</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label>Mobile No.:</label></th>
+                    <td>
+                        <span *ngIf="!isEditingMobile">{{ userDetails.mNo }}</span>
+                        <select *ngIf="isEditingMobile"  formControlName="country" (change)="onCountryChange($event)">
+                            <option value="in">IN(+91)</option>
+                            <option value="jp">JP(+81)</option>
+                            <option value="rs">RS(+7)</option>
+                            <option value="gb">GB(+49)</option>
+                            <option value="us">US(+1)</option>
+                            <option value="uk">UK(+44)</option>
+                        </select>
+                        <input (input)="onInput($event)"  formControlName="mobileNo" *ngIf="isEditingMobile" type="tel" [placeholder]="phoneNumberPlaceholder">
+                    </td>
+                    <td><button type="button" (click)="toggleEdit('mobile')"><i [ngClass]="isEditingMobile ? 'fa-solid fa-floppy-disk':'fa-solid fa-pen-fancy'" style="background-color: transparent; color: dodgerblue;"></i></button></td>
+                    <td>
+                        <ul class="errors" *ngIf="updateReq.get('mobileNo')?.invalid && updateReq.get('mobileNo')?.touched">
+                            <li  *ngIf="updateReq.get('mobileNo')?.hasError('required')">Mobile Number Required</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label>Email:</label></th>
+                    <td>
+                        <span *ngIf="!isEditingEmail">{{ userDetails.email }}</span>
+                        <input formControlName="userEmail" *ngIf="isEditingEmail" type="email">
+                    </td>
+                    <td><button type="button" (click)="toggleEdit('email')"><i [ngClass]="isEditingEmail ? 'fa-solid fa-floppy-disk':'fa-solid fa-pen-fancy'" style="background-color: transparent; color: dodgerblue;"></i></button></td>
+                </tr>
+                <tr>
+                    <th><label>Password:</label></th>
+                    <td>
+                        <span *ngIf="!isEditingPassword">{{ showPassword ? userDetails.password : '****' }}</span>
+                        <input  (input)="newPass()" title="Minimum length of 6 characters, Starts with an uppercase letter, & Contains lowercase letters, at least one special character, and at least two digits." formControlName="userPsw" *ngIf="isEditingPassword" [type]="showPassword ? 'text' : 'password'" placeholder="Enter New Password">
+                    </td>
+                    <td>
+                        <button type="button" *ngIf="userDetails.password" (click)="togglePasswordVisibility()"><i [ngClass]="showPassword ? 'fa-solid fa-eye-slash':'fa-solid fa-eye'" style="background-color: transparent; color: red;"></i></button>
+                        <button type="button" (click)="toggleEdit('password')"><i [ngClass]="isEditingPassword ? 'fa-solid fa-floppy-disk':'fa-solid fa-pen-fancy'" style="background-color: transparent; color: dodgerblue;"></i></button>
+                    </td>
+                    <td>
+                        <p *ngIf="(errorMessage || successMessage)" style="text-align: center;">Status: <code style="color: red;">{{errorMessage}}</code><code style="color: green;">{{successMessage}}</code></p>
+                        <p *ngIf="updateReq.get('userPsw')?.invalid && updateReq.get('userPsw')?.touched">
+                            <code *ngIf="updateReq.get('userPsw')?.hasError('pattern')">
+                                Please Fill Valid Password
+                            </code>
+                            <code *ngIf="updateReq.get('userPsw')?.hasError('minlength')">
+                                Minimum 6 Character Must Be Required
+                            </code>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label>WatchList:</label></th>
+                    <td *ngIf="!userDetails.watchList">
+                        <span>Nothing</span>
+                    </td>
+                    <td *ngIf="userDetails.watchList">
+                        <table>
+                            <tr *ngFor="let watchList of userDetails.watchList; let i = index">
+                                <td class="watchItem"><span>{{ watchList.watchId }}</span></td>
+                                <td class="watchItem"><span>{{ watchList.entId }}</span></td>
+                                <td class="watchItem"><span>{{ watchList.entTitle }}</span></td>
+                                <td class="watchItem"><button type="button" (click)="deleteWatch(i)" *ngIf="isEditingWatchList">X</button></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td *ngIf="userDetails.watchList && userDetails.watchList.length > 0"><button type="button" (click)="toggleEdit('watchList')"><i class="fa-solid fa-pen-fancy" style="background-color: transparent; color: dodgerblue;"></i></button></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td><button class="controlBtn" type="submit">Submit</button></td>
+                    <td><button type="button" class="controlBtn">Cancel</button></td>
+                    <td><button type="button" class="controlBtn"><i class="fa-solid fa-power-off" style="background-color: transparent; color: red; width: 20px; "></i></button></td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
